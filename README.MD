@@ -18,18 +18,18 @@ For enabling TLS set MQ_TLS_DISABLED=false and make sure other TLS/certificate p
 -  You can also run from commandline by going to root folder and and run "docker-compose up --build". Make sure .env file contains expected environment variables.
 
 # Environment variables (example values)
-MQ_HOST=vcc141t.mq.volvocars.net
-MQ_PORT=1414
-MQ_QMGR=VCC141T
-MQ_QUEUE_NAME=VCC7842.TESTDATA
-MQ_CHANNEL=CLIENTS.OEMAN
-MQ_CONNECTION_MODE=1
-MQ_TLS_DISABLED=false
-MQ_CLIENT_CERTIFICATE_PATH=/app/cert/your-client-certificate.pfx
-MQ_CLIENT_CERTIFICATE_PASSWORD=add-your-client-certificate-password-here
-MQ_CLIENT_CERTIFICATE_LABEL=add-certificate-label-if-any-ohterwise-remove-or-leave-empty_primarly-windows
-MQ_SSL_CIPHER_SPEC=TLS_RSA_WITH_AES_256_CBC_SHA256
-MQ_SSL_CERT_REPOSITORY=*USER
-MQ_SSL_PEER_NAME='CN=oneengine-pvo-app5921-test.apps.iod-vct-qa.volvocars.net,OU=Industrial Operations,O=Volvo Car Corporation AB,L=Gothenburg,S=Torslanda,C=SE'
-XMS_TRACE_FORMAT=ADVANCED
-XMS_TRACE_ON=1
+-  MQ_HOST=vcc141t.mq.volvocars.net
+-  MQ_PORT=1414
+-  MQ_QMGR=VCC141T
+-  MQ_QUEUE_NAME=VCC7842.TESTDATA
+-  MQ_CHANNEL=CLIENTS.OEMAN
+-  MQ_CONNECTION_MODE=1
+-  MQ_TLS_DISABLED=false
+-  MQ_CLIENT_CERTIFICATE_PATH=/app/cert/your-client-certificate.pfx
+-  MQ_CLIENT_CERTIFICATE_PASSWORD=add-your-client-certificate-password-here
+-  MQ_CLIENT_CERTIFICATE_LABEL=add-certificate-label-if-any-ohterwise-remove-or-leave-empty_primarly-windows
+-  MQ_SSL_CIPHER_SPEC=TLS_RSA_WITH_AES_256_CBC_SHA256
+-  MQ_SSL_CERT_REPOSITORY=*USER
+-  MQ_SSL_PEER_NAME='CN=oneengine-pvo-app5921-test.apps.iod-vct-qa.volvocars.net,OU=Industrial Operations,O=Volvo Car Corporation AB,L=Gothenburg,S=Torslanda,C=SE'
+-  XMS_TRACE_FORMAT=ADVANCED
+-  XMS_TRACE_ON=1
