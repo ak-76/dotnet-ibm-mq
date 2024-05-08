@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  dotnetibmmq:
+    image: ${DOCKER_REGISTRY-}dotnetibmmq
+    build:
+      context: .
+      dockerfile: DotNetIbmMq/Dockerfile
+    environment:
+      MQ_HOST: ${MQ_HOST}
+      MQ_PORT: ${MQ_PORT:-1414}
+      MQ_QMGR: ${MQ_QMGR}
+      MQ_QUEUE_NAME: ${MQ_QUEUE_NAME}
+      MQ_CHANNEL: ${MQ_CHANNEL}
+      MQ_CONNECTION_MODE: ${MQ_CONNECTION_MODE:-1} 
+      MQ_CLIENT_CERTIFICATE_PATH: ${MQ_CLIENT_CERTIFICATE_PATH}
+      MQ_CLIENT_CERTIFICATE_PASSWORD: ${MQ_CLIENT_CERTIFICATE_PASSWORD}
+      MQ_CLIENT_CERTIFICATE_LABEL: ${MQ_CLIENT_CERTIFICATE_LABEL}
+      MQ_SSL_CIPHER_SPEC: ${MQ_SSL_CIPHER_SPEC}
+      MQ_SSL_CERT_REPOSITORY: ${MQ_SSL_CERT_REPOSITORY}
+      MQ_SSL_PEER_NAME: ${MQ_SSL_PEER_NAME}      
+      MQ_TLS_DISABLED: ${MQ_TLS_DISABLED}
+    volumes: 
+    - ./cert:/app/cert:ro

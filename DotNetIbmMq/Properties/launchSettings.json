@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DotNetIbmMq": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  dotnetibmmq:
+    environment:
+      XMS_TRACE_FILE_PATH: "/var/log/xmstrace"
+      XMS_TRACE_FORMAT: ${XMS_TRACE_FORMAT}
+      XMS_TRACE_ON: ${XMS_TRACE_ON}
+    volumes:
+      - ./mqtraces:/var/log/xmstrace
