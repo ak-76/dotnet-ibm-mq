@@ -1,18 +1,18 @@
 FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
 WORKDIR /app
 
-ARG CERTIFICATES_SUBCA_SRC=vcc-subca-06-g3.pem
-ARG CERTIFICATES_ROOTCA_SRC=vcc-root-ca-g2.pem
-ARG CERTIFICATES_SUBCA_DEST=vcc-subca-06-g3.crt
-ARG CERTIFICATES_ROOTCA_DEST=vcc-root-ca-g2.crt
+ARG CERT_ROOTCA_SRC=vcc-root-ca-g2.pem
+ARG CERT_ROOTCA_DEST=vcc-root-ca-g2.crt
+ARG CERT_SUBCA_SRC=vcc-subca-06-g3.pem
+ARG CERT_SUBCA_DEST=vcc-subca-06-g3.crt
 
-RUN echo "CERTIFICATES_SUBCA_SRC=${CERTIFICATES_SUBCA_SRC}" && \
-    echo "CERTIFICATES_ROOTCA_SRC=${CERTIFICATES_ROOTCA_SRC}" && \
-    echo "CERTIFICATES_SUBCA_DEST=${CERTIFICATES_SUBCA_DEST}" && \
-    echo "CERTIFICATES_ROOTCA_DEST=${CERTIFICATES_ROOTCA_DEST}"
+RUN echo "CERT_ROOTCA_SRC=${CERT_ROOTCA_SRC}" && \
+    echo "CERT_ROOTCA_DEST=${CERT_ROOTCA_DEST}" && \
+    echo "CERT_SUBCA_SRC=${CERT_SUBCA_SRC}" && \
+    echo "CERT_SUBCA_DEST=${CERT_SUBCA_DEST}"
 
-COPY ./cert/${CERTIFICATES_SUBCA_SRC} /usr/local/share/ca-certificates/${CERTIFICATES_SUBCA_DEST}
-COPY ./cert/${CERTIFICATES_ROOTCA_SRC} /usr/local/share/ca-certificates/${CERTIFICATES_ROOTCA_DEST}
+COPY ./cert/${CERT_ROOTCA_SRC} /usr/local/share/ca-certificates/${CERT_ROOTCA_DEST}
+COPY ./cert/${CERT_SUBCA_SRC} /usr/local/share/ca-certificates/${CERT_SUBCA_DEST}
 RUN update-ca-certificates
 
 
