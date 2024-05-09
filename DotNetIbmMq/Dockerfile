@@ -1,8 +1,20 @@
 FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
 WORKDIR /app
-COPY ./cert/vcc-subca-06-g3.pem /usr/local/share/ca-certificates/vcc-subca-06-g3.crt
-COPY ./cert/vcc-root-ca-g2.pem /usr/local/share/ca-certificates/vcc-root-ca-g2.crt
+
+ARG CERTIFICATES_SUBCA_SRC=vcc-subca-06-g3.pem
+ARG CERTIFICATES_ROOTCA_SRC=vcc-root-ca-g2.pem
+ARG CERTIFICATES_SUBCA_DEST=vcc-subca-06-g3.crt
+ARG CERTIFICATES_ROOTCA_DEST=vcc-root-ca-g2.crt
+
+RUN echo "CERTIFICATES_SUBCA_SRC=${CERTIFICATES_SUBCA_SRC}" && \
+    echo "CERTIFICATES_ROOTCA_SRC=${CERTIFICATES_ROOTCA_SRC}" && \
+    echo "CERTIFICATES_SUBCA_DEST=${CERTIFICATES_SUBCA_DEST}" && \
+    echo "CERTIFICATES_ROOTCA_DEST=${CERTIFICATES_ROOTCA_DEST}"
+
+COPY ./cert/${CERTIFICATES_SUBCA_SRC} /usr/local/share/ca-certificates/${CERTIFICATES_SUBCA_DEST}
+COPY ./cert/${CERTIFICATES_ROOTCA_SRC} /usr/local/share/ca-certificates/${CERTIFICATES_ROOTCA_DEST}
 RUN update-ca-certificates
+
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
@@ -13,9 +25,11 @@ COPY . .
 WORKDIR "/src/DotNetIbmMq"
 RUN dotnet build "./DotNetIbmMq.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./DotNetIbmMq.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
 
 FROM base AS final
 WORKDIR /app

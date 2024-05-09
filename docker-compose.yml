@@ -6,6 +6,11 @@ services:
     build:
       context: .
       dockerfile: DotNetIbmMq/Dockerfile
+      args:
+        CERTIFICATES_SUBCA_SRC: ${CERTIFICATES_SUBCA_SRC}
+        CERTIFICATES_ROOTCA_SRC: ${CERTIFICATES_ROOTCA_SRC}
+        CERTIFICATES_SUBCA_DEST: ${CERTIFICATES_SUBCA_DEST}
+        CERTIFICATES_ROOTCA_DEST: ${CERTIFICATES_ROOTCA_DEST}
     environment:
       MQ_HOST: ${MQ_HOST}
       MQ_PORT: ${MQ_PORT:-1414}
