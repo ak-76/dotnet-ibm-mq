@@ -1,6 +1,6 @@
 # Simple Example of XMS based .net application on Linux docker container
 Intention of this simple example is to have the base environment on linux container ready for troubleshooting connection to IBM MQ using TLS when running on linux docker container.
-The code is only intended for **testing purpose** and illustrating the base concept.
+The code is only intended for quick **testing and troubleshooting** and illustrating the base concept.
 
 ## Making environment variables avaialble for docker container
 Add .env file in root folder, same location as docker-compose.yaml file, containing environment variables which are specified in the docker-compose.yml and docker-compose.override.yml file.
@@ -18,7 +18,7 @@ For enabling TLS set MQ_TLS_DISABLED=false and make sure other TLS/certificate p
 
 ## Running application
 -  Make sure Docker Desktop is installed on your local machine and linux containers are activated
--  Using Visual studio make sure docker-compose is set as start up project (if not already then right click on docker-compose in visual studio solution explorer and select "Set as start up project". Now start docker-compose from the menu.
+-  Using Visual studio make sure docker-compose is set as start up project (if not set already then right click on docker-compose in visual studio solution explorer and select "Set as start up project"). Now start with docker-compose from the menu.
 -  You can also run from commandline by going to root folder and and run "docker-compose up --build". Make sure .env file contains expected environment variables.
 
 ## Environment variables (example values)
