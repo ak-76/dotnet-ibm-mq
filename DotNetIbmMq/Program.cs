@@ -32,7 +32,7 @@ internal class Program
 
             Console.WriteLine($"sending message: {message.Text}{Environment.NewLine}metadata: {message}");
             messageProducer.Send(message);
-            Console.WriteLine($"message sent.");
+            Console.WriteLine("message sent");
         }
         catch (Exception ex)
         {
@@ -41,58 +41,51 @@ internal class Program
         finally
         {
             messageProducer?.Close();
+            messageProducer?.Dispose();
             destination?.Dispose();
             session?.Dispose();
-            connection?.Close();
+            connection?.Dispose();
         }
     }
 
     private static void InstallCertificates(IDictionary environmentVariablesDictionary)
     {
-        try
+        if (IsTlsDisabled(environmentVariablesDictionary))
         {
-            if (IsTlsDisabled(environmentVariablesDictionary))
-            {
-                return;
-            }
-            var clientCertificatePath = environmentVariablesDictionary[Constants.MqClientCertificatePath]?.ToString();
-            var clientCertificatePassword = environmentVariablesDictionary[Constants.MqClientCertificatePassword]?.ToString();
-
-            if (string.IsNullOrWhiteSpace(clientCertificatePath) || string.IsNullOrWhiteSpace(clientCertificatePassword))
-            {
-                return;
-            }
-
-            var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-            store.Open(OpenFlags.ReadWrite);
-
-            var importCollection = new X509Certificate2Collection();
-            importCollection.Import(clientCertificatePath, clientCertificatePassword, X509KeyStorageFlags.PersistKeySet);
-            foreach (var cert in importCollection)
-            {
-                Console.WriteLine($"Processing Certificate: Subject: {cert.Subject}, Thumbprint: {cert.Thumbprint}");
-                var alreadyExists = store.Certificates.Find(X509FindType.FindByThumbprint, cert.Thumbprint, false).Count > 0;
-                if (!alreadyExists)
-                {
-                    store.Add(cert);
-                    Console.WriteLine($"Certificate installed successfully: Subject: {cert.Subject}");
-                }
-                else
-                {
-                    Console.WriteLine($"Certificate already exists: Subject: {cert.Subject}");
-                }
-            }
+            return;
         }
-        catch (Exception ex)
+
+        var clientCertificatePath = environmentVariablesDictionary[Constants.MqClientCertificatePath]?.ToString();
+        var clientCertificatePassword = environmentVariablesDictionary[Constants.MqClientCertificatePassword]?.ToString();
+        if (string.IsNullOrWhiteSpace(clientCertificatePath) || string.IsNullOrWhiteSpace(clientCertificatePassword))
         {
-            Console.WriteLine($"Message: {ex.Message}{Environment.NewLine}Exception: {ex}");
+            return;
+        }
+
+        var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+        store.Open(OpenFlags.ReadWrite);
+
+        var importCollection = new X509Certificate2Collection();
+        importCollection.Import(clientCertificatePath, clientCertificatePassword, X509KeyStorageFlags.PersistKeySet);
+        foreach (var cert in importCollection)
+        {
+            Console.WriteLine($"Processing Certificate: Subject: {cert.Subject}, Thumbprint: {cert.Thumbprint}");
+            var alreadyExists = store.Certificates.Find(X509FindType.FindByThumbprint, cert.Thumbprint, false).Count > 0;
+            if (!alreadyExists)
+            {
+                store.Add(cert);
+                Console.WriteLine($"Certificate installed successfully: Subject: {cert.Subject}");
+            }
+            else
+            {
+                Console.WriteLine($"Certificate already exists: Subject: {cert.Subject}");
+            }
         }
     }
 
     private static IConnectionFactory CreateConnectionFactory(IDictionary environmentVariablesDictionary)
     {
         var factory = XMSFactoryFactory.GetInstance(XMSC.CT_WMQ).CreateConnectionFactory();
-
         factory.SetStringProperty(XMSC.WMQ_HOST_NAME, environmentVariablesDictionary[Constants.MqHost]?.ToString());
         factory.SetIntProperty(XMSC.WMQ_PORT, int.Parse(environmentVariablesDictionary[Constants.MqPort]!.ToString()!));
         factory.SetStringProperty(XMSC.WMQ_QUEUE_MANAGER, environmentVariablesDictionary[Constants.MqQueueManager]?.ToString());
