@@ -1,4 +1,4 @@
-# Very simplified Example for trouble shooting XMS based .net application connecting to IBM MQ on Linux via docker container
+# Simplified Example for trouble shooting XMS based .net application on Linux docker container
 Intention of this simple example is to have the base environment on linux container ready for trying to connect to IBM MQ using TLS when running on linux docker container.
 The code is only intended for testing purpose and illustrating the base concept.
 
