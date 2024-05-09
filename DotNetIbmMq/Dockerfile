@@ -1,9 +1,8 @@
 FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
 WORKDIR /app
-ADD ./cert/vcc-subca-06-g3.crt /usr/local/share/ca-certificates/vcc-subca-06-g3.crt
-ADD ./cert/vcc-root-ca-g2.crt /usr/local/share/ca-certificates/vcc-root-ca-g2.crt
+COPY ./cert/vcc-subca-06-g3.pem /usr/local/share/ca-certificates/vcc-subca-06-g3.crt
+COPY ./cert/vcc-root-ca-g2.pem /usr/local/share/ca-certificates/vcc-root-ca-g2.crt
 RUN update-ca-certificates
-
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
