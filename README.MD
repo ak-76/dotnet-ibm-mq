@@ -1,23 +1,27 @@
-# Making environment variables avaialble for docker container
+# Very simplified Example for trouble shooting XMS based .net application connecting to IBM MQ on Linux via docker container
+Intention of this simple example is to have the base environment on linux container ready for trying to connect to IBM MQ using TLS when running on linux docker container.
+The code is only intended for testing purpose and illustrating the base concept.
+
+## Making environment variables avaialble for docker container
 Add .env file in root folder, same location as docker-compose.yaml file, containing environment variables which are specified in the docker-compose.yml and docker-compose.override.yml file.
 
-# Enabling/Disabling TLS (connecting without certificate requirement)
+## Enabling/Disabling TLS (connecting without certificate requirement)
 For disabling TLS upon connection to queuemanger, set MQ_TLS_DISABLED=true in .env file.
 For enabling TLS set MQ_TLS_DISABLED=false and make sure other TLS/certificate properties are provided
 
-## Providing certificates
+### Providing certificates
 -  Make sure client certificate is added to the cert folder at project root (cert folder at same level as .sln file). Client certificate need to be a .pfx or .p12 file.
 -  Make sure server intermediate and root certificates are added to the cert folder as well for certificate chain validation. Server certificates are added to linux image at the start of dockerfile as part of the base image. Make sure that what is stated in docker file is matching server certs that has been added in cert folder
 
-# IBM XMS Trace
+## IBM XMS Trace
 -  If enabled (env variables mapped in docker-compose.override.yml) detailed IBM MQ trace log will be created for client side in a folder names "mqtraces" at the root of the project folder (same level as docker-comopse files)
 
-# Running application
+## Running application
 -  Make sure Docker Desktop is installed on your local machine and linux containers are activated
 -  Using Visual studio make sure docker-compose is set as start up project (if not already then right click on docker-compose in visual studio solution explorer and select "Set as start up project". Now start docker-compose from the menu.
 -  You can also run from commandline by going to root folder and and run "docker-compose up --build". Make sure .env file contains expected environment variables.
 
-# Environment variables (example values)
+## Environment variables (example values)
 -  MQ_HOST=vcc141t.mq.volvocars.net
 -  MQ_PORT=1414
 -  MQ_QMGR=VCC141T
