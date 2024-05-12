@@ -2,7 +2,7 @@
 Intention of this simple example is to have the base environment on linux container ready for troubleshooting connection to IBM MQ using TLS when running on linux docker container.
 The code is only intended for quick **testing and troubleshooting** and illustrating the base concept.
 
-## Making environment variables avaialble for docker container
+## Making environment variables available for docker container
 Add .env file in root folder, same location as docker-compose.yaml file, containing environment variables which are specified in the docker-compose.yml and docker-compose.override.yml file.
 
 ## Enabling/Disabling TLS (connecting without certificate requirement)
